@@ -1,0 +1,41 @@
+# Azure Infrastructure Configuration Example
+# Copy this file to terraform.tfvars and update with your values
+
+# Core Infrastructure
+location = "East US"
+environment = "production"
+prefix = "azinfra"
+
+# Tags
+tags = {
+  "ManagedBy"     = "Terraform"
+  "Environment"   = "production"
+  "CostCenter"    = "IT"
+  "Compliance"    = "SOC2"
+  "DataClassification" = "Confidential"
+  "Project"       = "AzureInfrastructure"
+  "Owner"         = "CloudTeam"
+}
+
+# Networking
+vnet_address_space = ["10.0.0.0/16"]
+
+# Compute Configuration
+aks_node_count = 3
+aks_vm_size = "Standard_D2s_v3"
+admin_username = "azureadmin"
+admin_ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+
+# Storage Configuration
+storage_account_tier = "Standard"
+storage_account_replication_type = "ZRS"
+mysql_administrator_login = "mysqladmin"
+mysql_sku_name = "GP_Gen5_2"
+
+# Application Services
+app_service_plan_sku = "P1v2"
+function_app_sku = "EP1"
+
+# Monitoring
+enable_monitoring = true
+log_retention_days = 30
