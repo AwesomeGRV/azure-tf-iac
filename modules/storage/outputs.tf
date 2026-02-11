@@ -122,3 +122,93 @@ output "private_dns_zone_mysql_id" {
   description = "ID of the MySQL private DNS zone"
   value       = azurerm_private_dns_zone.mysql.id
 }
+
+output "sql_server_name" {
+  description = "Name of the SQL server"
+  value       = azurerm_sql_server.main.name
+}
+
+output "sql_server_id" {
+  description = "ID of the SQL server"
+  value       = azurerm_sql_server.main.id
+}
+
+output "sql_server_fqdn" {
+  description = "Fully qualified domain name of the SQL server"
+  value       = azurerm_sql_server.main.fully_qualified_domain_name
+}
+
+output "sql_database_name" {
+  description = "Name of the SQL database"
+  value       = azurerm_sql_database.main.name
+}
+
+output "sql_database_id" {
+  description = "ID of the SQL database"
+  value       = azurerm_sql_database.main.id
+}
+
+output "sql_administrator_login" {
+  description = "SQL administrator login"
+  value       = azurerm_sql_server.main.administrator_login
+}
+
+output "sql_administrator_password" {
+  description = "SQL administrator password"
+  value       = random_password.sql_admin.result
+  sensitive   = true
+}
+
+output "sql_connection_string" {
+  description = "SQL connection string"
+  value       = "Server=tcp:${azurerm_sql_server.main.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.main.name};User ID=${azurerm_sql_server.main.administrator_login};Password=${random_password.sql_admin.result};Encrypt=true;TrustServerCertificate=false;Connection Timeout=30;"
+  sensitive   = true
+}
+
+output "redis_cache_name" {
+  description = "Name of the Redis Cache"
+  value       = azurerm_redis_cache.main.name
+}
+
+output "redis_cache_id" {
+  description = "ID of the Redis Cache"
+  value       = azurerm_redis_cache.main.id
+}
+
+output "redis_cache_primary_key" {
+  description = "Primary key of the Redis Cache"
+  value       = azurerm_redis_cache.main.primary_access_key
+  sensitive   = true
+}
+
+output "redis_cache_secondary_key" {
+  description = "Secondary key of the Redis Cache"
+  value       = azurerm_redis_cache.main.secondary_access_key
+  sensitive   = true
+}
+
+output "redis_cache_connection_string" {
+  description = "Connection string of the Redis Cache"
+  value       = "${azurerm_redis_cache.main.hostname}:6380,password=${azurerm_redis_cache.main.primary_access_key},ssl=True,abortConnect=False"
+  sensitive   = true
+}
+
+output "private_endpoint_sql_id" {
+  description = "ID of the SQL private endpoint"
+  value       = azurerm_private_endpoint.sql.id
+}
+
+output "private_endpoint_redis_id" {
+  description = "ID of the Redis private endpoint"
+  value       = azurerm_private_endpoint.redis.id
+}
+
+output "private_dns_zone_sql_id" {
+  description = "ID of the SQL private DNS zone"
+  value       = azurerm_private_dns_zone.sql.id
+}
+
+output "private_dns_zone_redis_id" {
+  description = "ID of the Redis private DNS zone"
+  value       = azurerm_private_dns_zone.redis.id
+}

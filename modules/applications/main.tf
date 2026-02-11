@@ -286,3 +286,77 @@ resource "azurerm_monitor_diagnostic_setting" "function_app" {
     category = "AllMetrics"
   }
 }
+
+resource "azurerm_servicebus_namespace" "main" {
+  name                = "sb-${var.naming_suffix}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku                 = var.service_bus_sku
+  tags                = var.tags
+
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+resource "azurerm_servicebus_namespace_authorization_rule" "main" {
+  name     = "RootManageSharedAccessKey"
+  namespace_id = azurerm_servicebus_namespace.main.id
+
+  listen = true
+  send   = true
+  manage = true
+}
+
+resource "azurerm_servicebus_queue" "main" {
+  name         = "app-queue"
+  namespace_id = azurerm_servicebus_namespace.main.id
+  enable_partitioning = true
+  enable_express = true
+}
+
+resource "azurerm_servicebus_topic" "main" {
+  name         = "app-topic"
+  namespace_id = azurerm_servicebus_namespace.main.id
+  enable_partitioning = true
+  enable_express = true
+}
+
+resource "azurerm_eventgrid_system_topic_event_subscription" "storage" {
+  name                = "storage-events-subscription"
+  system_topic        = "Microsoft.Storage.StorageAccounts"
+  resource_group_name = var.resource_group_name
+  
+  event_delivery_schema = "EventGridSchema"
+  included_event_types = [
+    "Microsoft.Storage.BlobCreated",
+    "Microsoft.Storage.BlobDeleted"
+  ]
+
+  webhook_endpoint {
+    url = "https://example.com/webhook"
+  }
+
+  labels = ["storage", "blobs"]
+  subject_filter {
+    subject_begins_with = "/blobServices/default/containers/"
+  }
+}
+
+resource "azurerm_eventgrid_system_topic_event_subscription" "resource_groups" {
+  name                = "rg-events-subscription"
+  system_topic        = "Microsoft.Resources.ResourceGroups"
+  resource_group_name = var.resource_group_name
+  
+  event_delivery_schema = "EventGridSchema"
+  included_event_types = [
+    "Microsoft.Resources.ResourceWriteSuccess",
+    "Microsoft.Resources.ResourceDeleteSuccess"
+  ]
+
+  webhook_endpoint {
+    url = "https://example.com/webhook"
+  }
+
+  labels = ["resource-groups", "audit"]
+}

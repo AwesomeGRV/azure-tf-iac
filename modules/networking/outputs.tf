@@ -104,6 +104,36 @@ output "route_table_id" {
 }
 
 output "ddos_protection_plan_id" {
-  description = "ID of the DDoS protection plan"
+  description = "ID of DDoS protection plan"
   value       = azurerm_network_ddos_protection_plan.main.id
+}
+
+output "application_gateway_subnet_id" {
+  description = "ID of Application Gateway subnet"
+  value       = azurerm_subnet.application_gateway.id
+}
+
+output "application_gateway_subnet_name" {
+  description = "Name of Application Gateway subnet"
+  value       = azurerm_subnet.application_gateway.name
+}
+
+output "application_gateway_id" {
+  description = "ID of Application Gateway"
+  value       = azurerm_application_gateway.main.id
+}
+
+output "application_gateway_name" {
+  description = "Name of Application Gateway"
+  value       = azurerm_application_gateway.main.name
+}
+
+output "application_gateway_public_ip" {
+  description = "Public IP address of Application Gateway"
+  value       = azurerm_public_ip.app_gateway.ip_address
+}
+
+output "application_gateway_public_ip_id" {
+  description = "ID of Application Gateway public IP"
+  value       = azurerm_public_ip.app_gateway.id
 }

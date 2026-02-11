@@ -94,3 +94,29 @@ output "network_security_group_ids" {
   description = "IDs of the network security groups"
   value       = azurerm_network_security_group.vm[*].id
 }
+
+output "container_registry_name" {
+  description = "Name of the Azure Container Registry"
+  value       = azurerm_container_registry.main.name
+}
+
+output "container_registry_id" {
+  description = "ID of the Azure Container Registry"
+  value       = azurerm_container_registry.main.id
+}
+
+output "container_registry_login_server" {
+  description = "Login server URL of the Azure Container Registry"
+  value       = azurerm_container_registry.main.login_server
+}
+
+output "container_registry_admin_username" {
+  description = "Admin username of the Azure Container Registry"
+  value       = azurerm_container_registry.main.admin_username
+}
+
+output "container_registry_admin_password" {
+  description = "Admin password of the Azure Container Registry"
+  value       = azurerm_container_registry.main.admin_password
+  sensitive   = true
+}

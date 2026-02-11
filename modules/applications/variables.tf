@@ -48,3 +48,15 @@ variable "log_analytics_id" {
   type        = string
   default     = null
 }
+
+variable "service_bus_sku" {
+  description = "SKU for Service Bus namespace"
+  type        = string
+  default     = "Standard"
+}
+
+variable "event_grid_sku" {
+  description = "SKU for Event Grid topic"
+  type        = string
+  default     = "Basic"
+}

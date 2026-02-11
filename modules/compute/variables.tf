@@ -64,3 +64,9 @@ variable "log_analytics_id" {
   type        = string
   default     = null
 }
+
+variable "acr_sku" {
+  description = "SKU tier for Azure Container Registry"
+  type        = string
+  default     = "Standard"
+}

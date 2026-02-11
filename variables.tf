@@ -122,3 +122,63 @@ variable "log_retention_days" {
   type        = number
   default     = 30
 }
+
+variable "acr_sku" {
+  description = "SKU tier for Azure Container Registry"
+  type        = string
+  default     = "Standard"
+}
+
+variable "redis_sku_name" {
+  description = "SKU name for Redis Cache"
+  type        = string
+  default     = "Standard"
+}
+
+variable "redis_family" {
+  description = "Redis family"
+  type        = string
+  default     = "C"
+}
+
+variable "redis_capacity" {
+  description = "Redis capacity"
+  type        = number
+  default     = 1
+}
+
+variable "sql_sku_name" {
+  description = "SKU name for Azure SQL Database"
+  type        = string
+  default     = "S2"
+}
+
+variable "sql_admin_login" {
+  description = "SQL administrator login"
+  type        = string
+  default     = "sqladmin"
+}
+
+variable "app_gateway_sku" {
+  description = "SKU for Application Gateway"
+  type        = string
+  default     = "WAF_v2"
+}
+
+variable "app_gateway_capacity" {
+  description = "Capacity for Application Gateway"
+  type        = number
+  default     = 2
+}
+
+variable "service_bus_sku" {
+  description = "SKU for Service Bus namespace"
+  type        = string
+  default     = "Standard"
+}
+
+variable "event_grid_sku" {
+  description = "SKU for Event Grid topic"
+  type        = string
+  default     = "Basic"
+}

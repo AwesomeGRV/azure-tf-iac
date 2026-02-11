@@ -139,3 +139,108 @@ output "naming_suffix" {
   description = "Generated naming suffix for resources"
   value       = local.naming_suffix
 }
+
+output "container_registry_name" {
+  description = "Name of the Azure Container Registry"
+  value       = module.compute.container_registry_name
+}
+
+output "container_registry_login_server" {
+  description = "Login server URL of the Azure Container Registry"
+  value       = module.compute.container_registry_login_server
+}
+
+output "container_registry_admin_username" {
+  description = "Admin username of the Azure Container Registry"
+  value       = module.compute.container_registry_admin_username
+}
+
+output "container_registry_admin_password" {
+  description = "Admin password of the Azure Container Registry"
+  value       = module.compute.container_registry_admin_password
+  sensitive   = true
+}
+
+output "sql_server_name" {
+  description = "Name of the SQL server"
+  value       = module.storage.sql_server_name
+}
+
+output "sql_server_fqdn" {
+  description = "Fully qualified domain name of the SQL server"
+  value       = module.storage.sql_server_fqdn
+}
+
+output "sql_database_name" {
+  description = "Name of the SQL database"
+  value       = module.storage.sql_database_name
+}
+
+output "sql_administrator_login" {
+  description = "SQL administrator login"
+  value       = module.storage.sql_administrator_login
+}
+
+output "sql_administrator_password" {
+  description = "SQL administrator password"
+  value       = module.storage.sql_administrator_password
+  sensitive   = true
+}
+
+output "sql_connection_string" {
+  description = "SQL connection string"
+  value       = module.storage.sql_connection_string
+  sensitive   = true
+}
+
+output "redis_cache_name" {
+  description = "Name of the Redis Cache"
+  value       = module.storage.redis_cache_name
+}
+
+output "redis_cache_connection_string" {
+  description = "Connection string of the Redis Cache"
+  value       = module.storage.redis_cache_connection_string
+  sensitive   = true
+}
+
+output "application_gateway_name" {
+  description = "Name of Application Gateway"
+  value       = module.networking.application_gateway_name
+}
+
+output "application_gateway_public_ip" {
+  description = "Public IP address of Application Gateway"
+  value       = module.networking.application_gateway_public_ip
+}
+
+output "service_bus_namespace_name" {
+  description = "Name of Service Bus namespace"
+  value       = module.applications.service_bus_namespace_name
+}
+
+output "service_bus_primary_connection_string" {
+  description = "Primary connection string of Service Bus namespace"
+  value       = module.applications.service_bus_primary_connection_string
+  sensitive   = true
+}
+
+output "service_bus_queue_name" {
+  description = "Name of Service Bus queue"
+  value       = module.applications.service_bus_queue_name
+}
+
+output "service_bus_topic_name" {
+  description = "Name of Service Bus topic"
+  value       = module.applications.service_bus_topic_name
+}
+
+output "event_grid_storage_subscription_id" {
+  description = "ID of Event Grid storage subscription"
+  value       = module.applications.event_grid_storage_subscription_id
+}
+
+output "event_grid_resource_groups_subscription_id" {
+  description = "ID of Event Grid resource groups subscription"
+  value       = module.applications.event_grid_resource_groups_subscription_id
+}

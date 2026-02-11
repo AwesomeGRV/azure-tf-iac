@@ -270,3 +270,25 @@ data "azurerm_log_analytics_workspace" "primary" {
   name                = split("/", var.log_analytics_id)[8]
   resource_group_name = split("/", var.log_analytics_id)[4]
 }
+
+resource "azurerm_container_registry" "main" {
+  name                = replace("acr${var.naming_suffix}", "-", "")
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku                 = var.acr_sku
+  admin_enabled       = true
+  tags                = var.tags
+
+  network_rule_set {
+    default_action = "Deny"
+    ip_rule       = []
+    virtual_network {
+      action = "Allow"
+      subnet_id = var.aks_subnet_id
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+}

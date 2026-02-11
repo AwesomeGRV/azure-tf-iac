@@ -22,3 +22,15 @@ variable "tags" {
   description = "Tags to apply to all resources"
   type        = map(string)
 }
+
+variable "app_gateway_sku" {
+  description = "SKU for Application Gateway"
+  type        = string
+  default     = "WAF_v2"
+}
+
+variable "app_gateway_capacity" {
+  description = "Capacity for Application Gateway"
+  type        = number
+  default     = 2
+}

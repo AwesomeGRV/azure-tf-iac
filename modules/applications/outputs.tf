@@ -90,7 +90,59 @@ output "app_service_site_credentials" {
 }
 
 output "function_app_site_credentials" {
-  description = "Site credentials for the Function App"
+  description = "Site credentials for Function App"
   value       = azurerm_linux_function_app.main.site_credentials
   sensitive   = true
+}
+
+output "service_bus_namespace_name" {
+  description = "Name of Service Bus namespace"
+  value       = azurerm_servicebus_namespace.main.name
+}
+
+output "service_bus_namespace_id" {
+  description = "ID of Service Bus namespace"
+  value       = azurerm_servicebus_namespace.main.id
+}
+
+output "service_bus_primary_connection_string" {
+  description = "Primary connection string of Service Bus namespace"
+  value       = azurerm_servicebus_namespace_authorization_rule.main.primary_connection_string
+  sensitive   = true
+}
+
+output "service_bus_secondary_connection_string" {
+  description = "Secondary connection string of Service Bus namespace"
+  value       = azurerm_servicebus_namespace_authorization_rule.main.secondary_connection_string
+  sensitive   = true
+}
+
+output "service_bus_queue_name" {
+  description = "Name of Service Bus queue"
+  value       = azurerm_servicebus_queue.main.name
+}
+
+output "service_bus_queue_id" {
+  description = "ID of Service Bus queue"
+  value       = azurerm_servicebus_queue.main.id
+}
+
+output "service_bus_topic_name" {
+  description = "Name of Service Bus topic"
+  value       = azurerm_servicebus_topic.main.name
+}
+
+output "service_bus_topic_id" {
+  description = "ID of Service Bus topic"
+  value       = azurerm_servicebus_topic.main.id
+}
+
+output "event_grid_storage_subscription_id" {
+  description = "ID of Event Grid storage subscription"
+  value       = azurerm_eventgrid_system_topic_event_subscription.storage.id
+}
+
+output "event_grid_resource_groups_subscription_id" {
+  description = "ID of Event Grid resource groups subscription"
+  value       = azurerm_eventgrid_system_topic_event_subscription.resource_groups.id
 }

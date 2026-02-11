@@ -72,6 +72,13 @@ resource "azurerm_subnet" "firewall" {
   address_prefixes     = ["10.0.5.0/24"]
 }
 
+resource "azurerm_subnet" "application_gateway" {
+  name                 = "snet-appgw"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = ["10.0.6.0/24"]
+}
+
 resource "azurerm_network_security_group" "aks" {
   name                = "nsg-aks-${var.naming_suffix}"
   location            = var.location
@@ -322,4 +329,107 @@ resource "azurerm_firewall_policy_rule_collection_group" "deny" {
 resource "azurerm_firewall" "main_policy_association" {
   name                = azurerm_firewall.main.name
   firewall_policy_id  = azurerm_firewall_policy.main.id
+}
+
+resource "azurerm_public_ip" "app_gateway" {
+  name                = "pip-appgw-${var.naming_suffix}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+  sku                = "Standard"
+  zones              = ["1", "2", "3"]
+  tags               = var.tags
+}
+
+resource "azurerm_application_gateway" "main" {
+  name                = "agw-${var.naming_suffix}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  tags               = var.tags
+
+  sku {
+    name     = var.app_gateway_sku
+    tier     = "WAF_v2"
+    capacity = var.app_gateway_capacity
+  }
+
+  gateway_ip_configuration {
+    name      = "gateway-ip-config"
+    subnet_id = azurerm_subnet.application_gateway.id
+  }
+
+  frontend_port {
+    name = "port-80"
+    port = 80
+  }
+
+  frontend_port {
+    name = "port-443"
+    port = 443
+  }
+
+  frontend_ip_configuration {
+    name                 = "frontend-ip-config"
+    public_ip_address_id = azurerm_public_ip.app_gateway.id
+  }
+
+  backend_address_pool {
+    name = "default-backend-pool"
+  }
+
+  backend_http_settings {
+    name                  = "default-http-settings"
+    cookie_based_affinity = "Disabled"
+    path                  = "/"
+    port                  = 80
+    protocol              = "Http"
+    request_timeout        = 60
+  }
+
+  http_listener {
+    name                           = "http-listener"
+    frontend_ip_configuration_name   = "frontend-ip-config"
+    frontend_port_name              = "port-80"
+    protocol                       = "Http"
+  }
+
+  http_listener {
+    name                           = "https-listener"
+    frontend_ip_configuration_name   = "frontend-ip-config"
+    frontend_port_name              = "port-443"
+    protocol                       = "Https"
+    require_sni                    = true
+    ssl_certificate_name             = "app-gateway-ssl-cert"
+  }
+
+  request_routing_rule {
+    name                       = "default-routing-rule"
+    rule_type                  = "Basic"
+    http_listener_name          = "http-listener"
+    backend_address_pool_name   = "default-backend-pool"
+    backend_http_settings_name  = "default-http-settings"
+  }
+
+  request_routing_rule {
+    name                       = "https-routing-rule"
+    rule_type                  = "Basic"
+    http_listener_name          = "https-listener"
+    backend_address_pool_name   = "default-backend-pool"
+    backend_http_settings_name  = "default-http-settings"
+  }
+
+  ssl_certificate {
+    name     = "app-gateway-ssl-cert"
+    data     = "base64-encoded-pfx-data"
+    password = "certificate-password"
+  }
+
+  waf_configuration {
+    firewall_mode    = "Prevention"
+    rule_set_type   = "OWASP"
+    rule_set_version = "3.2"
+    enabled         = true
+  }
+
+  zones = ["1", "2", "3"]
 }
