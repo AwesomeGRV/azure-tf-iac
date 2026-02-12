@@ -26,6 +26,12 @@ This infrastructure deploys a complete Azure environment with the following comp
 - **App Service**: Web application hosting with private endpoints
 - **Function App**: Serverless compute with private endpoints
 - **Application Insights**: Application performance monitoring
+- **API Management**: API gateway and management with security policies
+- **Azure CDN**: Content delivery and caching
+- **Azure Front Door**: Global load balancing and WAF
+- **Notification Hubs**: Push notifications for mobile and web apps
+- **Cognitive Services**: AI/ML capabilities (optional)
+- **Data Factory**: Data integration and ETL (optional)
 
 ### Security & Identity
 - **Key Vault**: Secure secrets management with RBAC
@@ -159,6 +165,18 @@ terraform output
 #### Application Variables
 - `app_service_plan_sku`: App Service Plan SKU
 - `function_app_sku`: Function App SKU
+- `apim_sku_name`: API Management SKU name
+- `apim_publisher_name`: API Management publisher name
+- `apim_publisher_email`: API Management publisher email
+- `cdn_sku_name`: CDN profile SKU name
+- `front_door_sku_name`: Front Door SKU name
+- `enable_waf`: Enable WAF on Front Door
+- `notification_hub_sku`: Notification Hub SKU name
+- `notification_hub_namespace`: Notification Hub namespace
+- `cognitive_services_sku`: Cognitive Services SKU name
+- `enable_cognitive_services`: Enable Cognitive Services
+- `data_factory_sku`: Data Factory SKU name
+- `enable_data_factory`: Enable Data Factory
 
 #### Monitoring Variables
 - `enable_monitoring`: Enable Azure Monitor and Log Analytics
@@ -189,6 +207,13 @@ The deployment provides comprehensive outputs for integration:
 #### Application Outputs
 - `app_service_default_hostname`: Web application URL
 - `function_app_default_hostname`: Function App URL
+- `api_management_gateway_url`: API Management gateway URL
+- `api_management_portal_url`: API Management developer portal URL
+- `cdn_endpoint_host_name`: CDN endpoint hostname
+- `front_door_endpoint_host_name`: Front Door endpoint hostname
+- `notification_hub_connection_string`: Notification Hub connection string
+- `cognitive_services_endpoint`: Cognitive Services endpoint
+- `data_factory_name`: Data Factory name
 
 #### Monitoring Outputs
 - `log_analytics_workspace_id`: Log Analytics workspace ID
@@ -203,6 +228,7 @@ modules/
 ├── compute/             # AKS, VMs, availability sets
 ├── storage/             # Storage accounts, MySQL database
 ├── applications/        # App Service, Function App
+├── additional-services/ # API Management, CDN, Front Door, Notification Hubs, Cognitive Services, Data Factory
 └── monitoring/          # Azure Monitor, Log Analytics, alerts
 ```
 
@@ -236,6 +262,17 @@ modules/
 - Function App with private endpoints
 - Application Insights integration
 - Managed identities for services
+- Service Bus queues and topics
+- Event Grid subscriptions
+
+### Additional Services Module
+- API Management with security policies and rate limiting
+- Azure CDN for content delivery and caching
+- Azure Front Door with WAF and global load balancing
+- Notification Hubs for push notifications
+- Cognitive Services for AI/ML capabilities (optional)
+- Data Factory for data integration and ETL (optional)
+- Private endpoints and DNS zones for all services
 
 ### Monitoring Module
 - Log Analytics workspace

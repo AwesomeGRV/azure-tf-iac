@@ -105,3 +105,27 @@ module "applications" {
   key_vault_id        = module.security.key_vault_id
   log_analytics_id    = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
 }
+
+module "additional_services" {
+  source                = "./modules/additional-services"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  vnet_id               = module.networking.vnet_id
+  private_subnet_id     = module.networking.private_endpoints_subnet_id
+  key_vault_id          = module.security.key_vault_id
+  log_analytics_id      = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
+  apim_sku_name         = var.apim_sku_name
+  apim_publisher_name   = var.apim_publisher_name
+  apim_publisher_email  = var.apim_publisher_email
+  cdn_sku_name          = var.cdn_sku_name
+  front_door_sku_name   = var.front_door_sku_name
+  enable_waf            = var.enable_waf
+  notification_hub_sku  = var.notification_hub_sku
+  notification_hub_namespace = var.notification_hub_namespace
+  cognitive_services_sku = var.cognitive_services_sku
+  enable_cognitive_services = var.enable_cognitive_services
+  data_factory_sku      = var.data_factory_sku
+  enable_data_factory   = var.enable_data_factory
+}

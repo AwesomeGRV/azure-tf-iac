@@ -39,3 +39,28 @@ function_app_sku = "EP1"
 # Monitoring
 enable_monitoring = true
 log_retention_days = 30
+
+# Additional Services Configuration
+# API Management
+apim_sku_name = "Developer_1"
+apim_publisher_name = "API Management Team"
+apim_publisher_email = "api-team@example.com"
+
+# CDN Configuration
+cdn_sku_name = "Standard_Microsoft"
+
+# Front Door Configuration
+front_door_sku_name = "Standard_AzureFrontDoor"
+enable_waf = true
+
+# Notification Hubs
+notification_hub_sku = "Free"
+notification_hub_namespace = "notification-namespace"
+
+# Cognitive Services (disabled by default)
+enable_cognitive_services = false
+cognitive_services_sku = "S0"
+
+# Data Factory (disabled by default)
+enable_data_factory = false
+data_factory_sku = "GP"

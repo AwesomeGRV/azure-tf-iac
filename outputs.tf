@@ -244,3 +244,116 @@ output "event_grid_resource_groups_subscription_id" {
   description = "ID of Event Grid resource groups subscription"
   value       = module.applications.event_grid_resource_groups_subscription_id
 }
+
+# Additional Services Outputs
+output "api_management_name" {
+  description = "API Management service name"
+  value       = module.additional_services.api_management_name
+}
+
+output "api_management_gateway_url" {
+  description = "API Management gateway URL"
+  value       = module.additional_services.api_management_gateway_url
+}
+
+output "api_management_portal_url" {
+  description = "API Management developer portal URL"
+  value       = module.additional_services.api_management_portal_url
+}
+
+output "api_management_id" {
+  description = "API Management resource ID"
+  value       = module.additional_services.api_management_id
+}
+
+output "cdn_profile_name" {
+  description = "CDN profile name"
+  value       = module.additional_services.cdn_profile_name
+}
+
+output "cdn_endpoint_name" {
+  description = "CDN endpoint name"
+  value       = module.additional_services.cdn_endpoint_name
+}
+
+output "cdn_endpoint_host_name" {
+  description = "CDN endpoint host name"
+  value       = module.additional_services.cdn_endpoint_host_name
+}
+
+output "front_door_profile_name" {
+  description = "Front Door profile name"
+  value       = module.additional_services.front_door_profile_name
+}
+
+output "front_door_endpoint_name" {
+  description = "Front Door endpoint name"
+  value       = module.additional_services.front_door_endpoint_name
+}
+
+output "front_door_endpoint_host_name" {
+  description = "Front Door endpoint host name"
+  value       = module.additional_services.front_door_endpoint_host_name
+}
+
+output "front_door_waf_policy_id" {
+  description = "Front Door WAF policy ID"
+  value       = module.additional_services.front_door_waf_policy_id
+}
+
+output "notification_hub_namespace_name" {
+  description = "Notification Hub namespace name"
+  value       = module.additional_services.notification_hub_namespace_name
+}
+
+output "notification_hub_name" {
+  description = "Notification Hub name"
+  value       = module.additional_services.notification_hub_name
+}
+
+output "notification_hub_connection_string" {
+  description = "Notification Hub connection string"
+  value       = module.additional_services.notification_hub_connection_string
+  sensitive   = true
+}
+
+output "cognitive_services_account_name" {
+  description = "Cognitive Services account name"
+  value       = module.additional_services.cognitive_services_account_name
+}
+
+output "cognitive_services_account_id" {
+  description = "Cognitive Services account ID"
+  value       = module.additional_services.cognitive_services_account_id
+}
+
+output "cognitive_services_endpoint" {
+  description = "Cognitive Services endpoint"
+  value       = module.additional_services.cognitive_services_endpoint
+}
+
+output "cognitive_services_primary_key" {
+  description = "Cognitive Services primary key"
+  value       = module.additional_services.cognitive_services_primary_key
+  sensitive   = true
+}
+
+output "data_factory_name" {
+  description = "Data Factory name"
+  value       = module.additional_services.data_factory_name
+}
+
+output "data_factory_id" {
+  description = "Data Factory resource ID"
+  value       = module.additional_services.data_factory_id
+}
+
+output "apim_private_endpoint_id" {
+  description = "API Management private endpoint ID"
+  value       = module.additional_services.apim_private_endpoint_id
+}
+
+output "apim_private_dns_zone_id" {
+  description = "API Management private DNS zone ID"
+  value       = module.additional_services.apim_private_dns_zone_id
+}
