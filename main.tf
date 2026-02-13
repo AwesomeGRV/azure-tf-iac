@@ -106,8 +106,9 @@ module "applications" {
   log_analytics_id    = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
 }
 
-module "additional_services" {
-  source                = "./modules/additional-services"
+# API Management
+module "api_management" {
+  source                = "./modules/api-management"
   location              = var.location
   resource_group_name   = azurerm_resource_group.main.name
   naming_suffix         = local.naming_suffix
@@ -119,13 +120,62 @@ module "additional_services" {
   apim_sku_name         = var.apim_sku_name
   apim_publisher_name   = var.apim_publisher_name
   apim_publisher_email  = var.apim_publisher_email
+}
+
+# CDN
+module "cdn" {
+  source                = "./modules/cdn"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  log_analytics_id      = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
   cdn_sku_name          = var.cdn_sku_name
+  app_service_hostname   = module.applications.app_service_default_hostname
+}
+
+# Front Door
+module "front_door" {
+  source                = "./modules/front-door"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
   front_door_sku_name   = var.front_door_sku_name
   enable_waf            = var.enable_waf
+  app_service_hostname   = module.applications.app_service_default_hostname
+}
+
+# Notification Hubs
+module "notification_hubs" {
+  source                = "./modules/notification-hubs"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
   notification_hub_sku  = var.notification_hub_sku
   notification_hub_namespace = var.notification_hub_namespace
+}
+
+# Cognitive Services (optional)
+module "cognitive_services" {
+  count                 = var.enable_cognitive_services ? 1 : 0
+  source                = "./modules/cognitive-services"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  private_subnet_id     = module.networking.private_endpoints_subnet_id
   cognitive_services_sku = var.cognitive_services_sku
-  enable_cognitive_services = var.enable_cognitive_services
-  data_factory_sku      = var.data_factory_sku
-  enable_data_factory   = var.enable_data_factory
+}
+
+# Data Factory (optional)
+module "data_factory" {
+  count               = var.enable_data_factory ? 1 : 0
+  source              = "./modules/data-factory"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  naming_suffix       = local.naming_suffix
+  tags                = local.common_tags
+  data_factory_sku    = var.data_factory_sku
 }

@@ -291,3 +291,111 @@ variable "enable_data_factory" {
   type        = bool
   default     = false
 }
+
+# API Management Variables
+variable "apim_sku_name" {
+  description = "API Management SKU name"
+  type        = string
+  default     = "Developer_1"
+  
+  validation {
+    condition = contains([
+      "Developer_1", "Basic_1", "Basic_2", "Standard_1", "Standard_2", "Premium_1"
+    ], var.apim_sku_name)
+    error_message = "API Management SKU must be one of: Developer_1, Basic_1, Basic_2, Standard_1, Standard_2, Premium_1."
+  }
+}
+
+variable "apim_publisher_name" {
+  description = "API Management publisher name"
+  type        = string
+  default     = "API Management Team"
+}
+
+variable "apim_publisher_email" {
+  description = "API Management publisher email"
+  type        = string
+  default     = "api-team@example.com"
+}
+
+# CDN Variables
+variable "cdn_sku_name" {
+  description = "CDN profile SKU name"
+  type        = string
+  default     = "Standard_Microsoft"
+  
+  validation {
+    condition = contains([
+      "Standard_Microsoft", "Premium_Microsoft", "Standard_Akamai", "Standard_Verizon", "Premium_Verizon"
+    ], var.cdn_sku_name)
+    error_message = "CDN SKU must be one of: Standard_Microsoft, Premium_Microsoft, Standard_Akamai, Standard_Verizon, Premium_Verizon."
+  }
+}
+
+# Front Door Variables
+variable "front_door_sku_name" {
+  description = "Front Door SKU name"
+  type        = string
+  default     = "Standard_AzureFrontDoor"
+  
+  validation {
+    condition = contains([
+      "Standard_AzureFrontDoor", "Premium_AzureFrontDoor"
+    ], var.front_door_sku_name)
+    error_message = "Front Door SKU must be one of: Standard_AzureFrontDoor, Premium_AzureFrontDoor."
+  }
+}
+
+variable "enable_waf" {
+  description = "Enable WAF on Front Door"
+  type        = bool
+  default     = true
+}
+
+# Notification Hubs Variables
+variable "notification_hub_sku" {
+  description = "Notification Hub SKU name"
+  type        = string
+  default     = "Free"
+  
+  validation {
+    condition = contains(["Free", "Basic", "Standard"], var.notification_hub_sku)
+    error_message = "Notification Hub SKU must be one of: Free, Basic, Standard."
+  }
+}
+
+variable "notification_hub_namespace" {
+  description = "Notification Hub namespace"
+  type        = string
+  default     = "notification-namespace"
+}
+
+# Cognitive Services Variables
+variable "cognitive_services_sku" {
+  description = "Cognitive Services SKU name"
+  type        = string
+  default     = "S0"
+  
+  validation {
+    condition = contains(["F0", "S0", "S1", "S2", "S3", "S4"], var.cognitive_services_sku)
+    error_message = "Cognitive Services SKU must be one of: F0, S0, S1, S2, S3, S4."
+  }
+}
+
+variable "enable_cognitive_services" {
+  description = "Enable Cognitive Services"
+  type        = bool
+  default     = false
+}
+
+# Data Factory Variables
+variable "data_factory_sku" {
+  description = "Data Factory SKU name"
+  type        = string
+  default     = "GP"
+  
+  validation {
+    condition = contains(["GP", "GP_2"], var.data_factory_sku)
+    error_message = "Data Factory SKU must be one of: GP, GP_2."
+  }
+}

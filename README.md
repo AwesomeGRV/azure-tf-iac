@@ -228,7 +228,12 @@ modules/
 ├── compute/             # AKS, VMs, availability sets
 ├── storage/             # Storage accounts, MySQL database
 ├── applications/        # App Service, Function App
-├── additional-services/ # API Management, CDN, Front Door, Notification Hubs, Cognitive Services, Data Factory
+├── api-management/      # API Management service
+├── cdn/                # Azure CDN for content delivery
+├── front-door/         # Azure Front Door with WAF
+├── notification-hubs/   # Push notifications
+├── cognitive-services/   # AI/ML capabilities
+├── data-factory/       # Data integration and ETL
 └── monitoring/          # Azure Monitor, Log Analytics, alerts
 ```
 
@@ -265,14 +270,43 @@ modules/
 - Service Bus queues and topics
 - Event Grid subscriptions
 
-### Additional Services Module
-- API Management with security policies and rate limiting
-- Azure CDN for content delivery and caching
-- Azure Front Door with WAF and global load balancing
-- Notification Hubs for push notifications
-- Cognitive Services for AI/ML capabilities (optional)
-- Data Factory for data integration and ETL (optional)
-- Private endpoints and DNS zones for all services
+### API Management Module
+- API gateway with security policies and rate limiting
+- Developer portal for API documentation
+- Private endpoints and DNS zones
+- Integration with Key Vault for secrets
+- Diagnostic logging and monitoring
+
+### CDN Module
+- Azure CDN profile with compression
+- Content delivery optimization
+- Integration with App Service origins
+- Diagnostic logging and metrics
+
+### Front Door Module
+- Global load balancing and traffic routing
+- Web Application Firewall (WAF) protection
+- Health probes and failover
+- SSL/TLS termination
+- Custom rules for SQL injection and rate limiting
+
+### Notification Hubs Module
+- Push notifications for mobile and web apps
+- Multi-platform support (iOS, Android, Windows)
+- Scalable messaging infrastructure
+- Connection string management
+
+### Cognitive Services Module (Optional)
+- AI/ML capabilities for various services
+- Custom subdomain configuration
+- Network security with private endpoints
+- Support for multiple cognitive services
+
+### Data Factory Module (Optional)
+- Data integration and ETL pipelines
+- Managed identity for authentication
+- Scalable data processing
+- Integration with other Azure services
 
 ### Monitoring Module
 - Log Analytics workspace
