@@ -63,18 +63,7 @@ variable "admin_ssh_key" {
   default     = ""
 }
 
-variable "mysql_administrator_login" {
-  description = "MySQL administrator login"
-  type        = string
-  default     = "mysqladmin"
-}
-
-variable "mysql_sku_name" {
-  description = "MySQL SKU name"
-  type        = string
-  default     = "GP_Gen5_2"
-}
-
+# Storage Variables
 variable "storage_account_tier" {
   description = "Storage account tier"
   type        = string
@@ -99,36 +88,20 @@ variable "storage_account_replication_type" {
   }
 }
 
-variable "app_service_plan_sku" {
-  description = "App Service Plan SKU"
+# MySQL Variables
+variable "mysql_administrator_login" {
+  description = "MySQL administrator login"
   type        = string
-  default     = "P1v2"
+  default     = "mysqladmin"
 }
 
-variable "function_app_sku" {
-  description = "Function App SKU"
+variable "mysql_sku_name" {
+  description = "MySQL SKU name"
   type        = string
-  default     = "EP1"
+  default     = "GP_Gen5_2"
 }
 
-variable "enable_monitoring" {
-  description = "Enable Azure Monitor and Log Analytics"
-  type        = bool
-  default     = true
-}
-
-variable "log_retention_days" {
-  description = "Log retention period in days"
-  type        = number
-  default     = 30
-}
-
-variable "acr_sku" {
-  description = "SKU tier for Azure Container Registry"
-  type        = string
-  default     = "Standard"
-}
-
+# Redis Variables
 variable "redis_sku_name" {
   description = "SKU name for Redis Cache"
   type        = string
@@ -147,6 +120,7 @@ variable "redis_capacity" {
   default     = 1
 }
 
+# SQL Database Variables
 variable "sql_sku_name" {
   description = "SKU name for Azure SQL Database"
   type        = string
@@ -157,6 +131,38 @@ variable "sql_admin_login" {
   description = "SQL administrator login"
   type        = string
   default     = "sqladmin"
+}
+
+# Application Variables
+variable "app_service_plan_sku" {
+  description = "App Service Plan SKU"
+  type        = string
+  default     = "P1v2"
+}
+
+variable "function_app_sku" {
+  description = "Function App SKU"
+  type        = string
+  default     = "EP1"
+}
+
+# Monitoring Variables
+variable "enable_monitoring" {
+  description = "Enable Azure Monitor and Log Analytics"
+  type        = bool
+  default     = true
+}
+
+variable "log_retention_days" {
+  description = "Log retention period in days"
+  type        = number
+  default     = 30
+}
+
+variable "acr_sku" {
+  description = "SKU tier for Azure Container Registry"
+  type        = string
+  default     = "Standard"
 }
 
 variable "app_gateway_sku" {
@@ -184,115 +190,6 @@ variable "event_grid_sku" {
 }
 
 # Additional Services Variables
-variable "apim_sku_name" {
-  description = "API Management SKU name"
-  type        = string
-  default     = "Developer_1"
-  
-  validation {
-    condition = contains([
-      "Developer_1", "Basic_1", "Basic_2", "Standard_1", "Standard_2", "Premium_1"
-    ], var.apim_sku_name)
-    error_message = "API Management SKU must be one of: Developer_1, Basic_1, Basic_2, Standard_1, Standard_2, Premium_1."
-  }
-}
-
-variable "apim_publisher_name" {
-  description = "API Management publisher name"
-  type        = string
-  default     = "API Management Team"
-}
-
-variable "apim_publisher_email" {
-  description = "API Management publisher email"
-  type        = string
-  default     = "api-team@example.com"
-}
-
-variable "cdn_sku_name" {
-  description = "CDN profile SKU name"
-  type        = string
-  default     = "Standard_Microsoft"
-  
-  validation {
-    condition = contains([
-      "Standard_Microsoft", "Premium_Microsoft", "Standard_Akamai", "Standard_Verizon", "Premium_Verizon"
-    ], var.cdn_sku_name)
-    error_message = "CDN SKU must be one of: Standard_Microsoft, Premium_Microsoft, Standard_Akamai, Standard_Verizon, Premium_Verizon."
-  }
-}
-
-variable "front_door_sku_name" {
-  description = "Front Door SKU name"
-  type        = string
-  default     = "Standard_AzureFrontDoor"
-  
-  validation {
-    condition = contains([
-      "Standard_AzureFrontDoor", "Premium_AzureFrontDoor"
-    ], var.front_door_sku_name)
-    error_message = "Front Door SKU must be one of: Standard_AzureFrontDoor, Premium_AzureFrontDoor."
-  }
-}
-
-variable "enable_waf" {
-  description = "Enable WAF on Front Door"
-  type        = bool
-  default     = true
-}
-
-variable "notification_hub_sku" {
-  description = "Notification Hub SKU name"
-  type        = string
-  default     = "Free"
-  
-  validation {
-    condition = contains(["Free", "Basic", "Standard"], var.notification_hub_sku)
-    error_message = "Notification Hub SKU must be one of: Free, Basic, Standard."
-  }
-}
-
-variable "notification_hub_namespace" {
-  description = "Notification Hub namespace"
-  type        = string
-  default     = "notification-namespace"
-}
-
-variable "cognitive_services_sku" {
-  description = "Cognitive Services SKU name"
-  type        = string
-  default     = "S0"
-  
-  validation {
-    condition = contains(["F0", "S0", "S1", "S2", "S3", "S4"], var.cognitive_services_sku)
-    error_message = "Cognitive Services SKU must be one of: F0, S0, S1, S2, S3, S4."
-  }
-}
-
-variable "enable_cognitive_services" {
-  description = "Enable Cognitive Services"
-  type        = bool
-  default     = false
-}
-
-variable "data_factory_sku" {
-  description = "Data Factory SKU name"
-  type        = string
-  default     = "GP"
-  
-  validation {
-    condition = contains(["GP", "GP_2"], var.data_factory_sku)
-    error_message = "Data Factory SKU must be one of: GP, GP_2."
-  }
-}
-
-variable "enable_data_factory" {
-  description = "Enable Data Factory"
-  type        = bool
-  default     = false
-}
-
-# API Management Variables
 variable "apim_sku_name" {
   description = "API Management SKU name"
   type        = string
@@ -398,4 +295,10 @@ variable "data_factory_sku" {
     condition = contains(["GP", "GP_2"], var.data_factory_sku)
     error_message = "Data Factory SKU must be one of: GP, GP_2."
   }
+}
+
+variable "enable_data_factory" {
+  description = "Enable Data Factory"
+  type        = bool
+  default     = false
 }

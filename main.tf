@@ -52,24 +52,58 @@ module "security" {
   tags                = local.common_tags
 }
 
-module "storage" {
-  source                = "./modules/storage"
+module "storage_account" {
+  source                = "./modules/storage-account"
   location              = var.location
   resource_group_name   = azurerm_resource_group.main.name
   naming_suffix         = local.naming_suffix
   tags                  = local.common_tags
-  storage_account_tier  = var.storage_account_tier
-  storage_replication   = var.storage_account_replication_type
-  mysql_admin_login     = var.mysql_administrator_login
-  mysql_sku_name        = var.mysql_sku_name
-  sql_sku_name          = var.sql_sku_name
-  sql_admin_login       = var.sql_admin_login
-  redis_sku_name        = var.redis_sku_name
-  redis_family          = var.redis_family
-  redis_capacity        = var.redis_capacity
   vnet_id               = module.networking.vnet_id
   private_subnet_id     = module.networking.private_endpoints_subnet_id
   log_analytics_id      = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
+  storage_account_tier  = var.storage_account_tier
+  storage_replication   = var.storage_account_replication_type
+}
+
+module "mysql" {
+  source                = "./modules/mysql"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  vnet_id               = module.networking.vnet_id
+  private_subnet_id     = module.networking.private_endpoints_subnet_id
+  log_analytics_id      = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
+  mysql_admin_login     = var.mysql_administrator_login
+  mysql_sku_name        = var.mysql_sku_name
+}
+
+module "redis" {
+  source                = "./modules/redis"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  vnet_id               = module.networking.vnet_id
+  private_subnet_id     = module.networking.private_endpoints_subnet_id
+  redis_sku_name        = var.redis_sku_name
+  redis_family          = var.redis_family
+  redis_capacity        = var.redis_capacity
+  storage_account_connection_string = module.storage_account.storage_account_primary_connection_string
+}
+
+module "sql_database" {
+  source                = "./modules/sql-database"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+  naming_suffix         = local.naming_suffix
+  tags                  = local.common_tags
+  vnet_id               = module.networking.vnet_id
+  private_subnet_id     = module.networking.private_endpoints_subnet_id
+  sql_sku_name          = var.sql_sku_name
+  sql_admin_login       = var.sql_admin_login
+  storage_account_primary_blob_endpoint = module.storage_account.storage_account_primary_blob_endpoint
+  storage_account_primary_key = module.storage_account.storage_account_primary_key
 }
 
 module "compute" {

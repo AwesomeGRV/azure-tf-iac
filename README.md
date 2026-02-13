@@ -226,7 +226,10 @@ modules/
 ├── networking/          # Virtual network, subnets, firewall, NSGs
 ├── security/            # Key Vault, managed identities, RBAC
 ├── compute/             # AKS, VMs, availability sets
-├── storage/             # Storage accounts, MySQL database
+├── storage-account/      # Storage account with containers and file shares
+├── mysql/               # MySQL Flexible Server database
+├── redis/               # Redis Cache for caching
+├── sql-database/        # Azure SQL Database
 ├── applications/        # App Service, Function App
 ├── api-management/      # API Management service
 ├── cdn/                # Azure CDN for content delivery
@@ -256,11 +259,32 @@ modules/
 - SSH key generation
 - Managed identity assignments
 
-### Storage Module
-- Storage account with multiple containers
-- MySQL Flexible Server with zone redundancy
+### Storage Account Module
+- Storage account with multiple containers and file shares
+- Blob, table, and queue storage
 - Private endpoints for secure access
-- Backup and retention policies
+- Versioning and retention policies
+- Diagnostic logging and metrics
+
+### MySQL Module
+- MySQL Flexible Server with zone redundancy
+- Private endpoints and DNS zones
+- High availability configuration
+- Automated backup and maintenance windows
+- Diagnostic logging and monitoring
+
+### Redis Module
+- Redis Cache for high-performance caching
+- Private endpoints and DNS zones
+- Data persistence and backup configuration
+- Memory optimization policies
+
+### SQL Database Module
+- Azure SQL Database with auditing
+- Private endpoints and DNS zones
+- Threat detection and extended auditing
+- Azure AD integration
+- Diagnostic logging
 
 ### Applications Module
 - App Service with private endpoints

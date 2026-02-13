@@ -1,10 +1,10 @@
 output "resource_group_name" {
-  description = "Name of the resource group"
+  description = "Name of resource group"
   value       = azurerm_resource_group.main.name
 }
 
 output "resource_group_id" {
-  description = "ID of the resource group"
+  description = "ID of resource group"
   value       = azurerm_resource_group.main.id
 }
 
@@ -14,72 +14,149 @@ output "location" {
 }
 
 output "vnet_id" {
-  description = "ID of the virtual network"
+  description = "ID of virtual network"
   value       = module.networking.vnet_id
 }
 
 output "vnet_name" {
-  description = "Name of the virtual network"
+  description = "Name of virtual network"
   value       = module.networking.vnet_name
 }
 
 output "aks_cluster_name" {
-  description = "Name of the AKS cluster"
+  description = "Name of AKS cluster"
   value       = module.compute.aks_cluster_name
 }
 
 output "aks_cluster_id" {
-  description = "ID of the AKS cluster"
+  description = "ID of AKS cluster"
   value       = module.compute.aks_cluster_id
 }
 
 output "aks_kube_config" {
-  description = "Kubeconfig for the AKS cluster"
+  description = "Kubeconfig for AKS cluster"
   value       = module.compute.aks_kube_config
   sensitive   = true
 }
 
+# Storage Outputs
 output "storage_account_name" {
   description = "Name of the storage account"
-  value       = module.storage.storage_account_name
+  value       = module.storage_account.storage_account_name
 }
 
 output "storage_account_id" {
   description = "ID of the storage account"
-  value       = module.storage.storage_account_id
+  value       = module.storage_account.storage_account_id
 }
 
 output "storage_account_primary_key" {
   description = "Primary key of the storage account"
-  value       = module.storage.storage_account_primary_key
+  value       = module.storage_account.storage_account_primary_key
   sensitive   = true
 }
 
+output "storage_account_primary_blob_endpoint" {
+  description = "Primary blob endpoint of the storage account"
+  value       = module.storage_account.storage_account_primary_blob_endpoint
+}
+
+# MySQL Outputs
 output "mysql_server_name" {
   description = "Name of the MySQL server"
-  value       = module.storage.mysql_server_name
+  value       = module.mysql.mysql_server_name
 }
 
 output "mysql_server_fqdn" {
   description = "Fully qualified domain name of the MySQL server"
-  value       = module.storage.mysql_server_fqdn
+  value       = module.mysql.mysql_server_fqdn
 }
 
+output "mysql_administrator_login" {
+  description = "MySQL administrator login"
+  value       = module.mysql.mysql_administrator_login
+}
+
+output "mysql_administrator_password" {
+  description = "MySQL administrator password"
+  value       = module.mysql.mysql_administrator_password
+  sensitive   = true
+}
+
+output "mysql_connection_string" {
+  description = "MySQL connection string"
+  value       = module.mysql.mysql_connection_string
+  sensitive   = true
+}
+
+# Redis Outputs
+output "redis_cache_name" {
+  description = "Name of the Redis Cache"
+  value       = module.redis.redis_cache_name
+}
+
+output "redis_cache_connection_string" {
+  description = "Connection string of the Redis Cache"
+  value       = module.redis.redis_cache_connection_string
+  sensitive   = true
+}
+
+output "redis_cache_primary_key" {
+  description = "Primary key of the Redis Cache"
+  value       = module.redis.redis_cache_primary_key
+  sensitive   = true
+}
+
+output "redis_cache_hostname" {
+  description = "Hostname of the Redis Cache"
+  value       = module.redis.redis_cache_hostname
+}
+
+# SQL Database Outputs
+output "sql_server_name" {
+  description = "Name of the SQL server"
+  value       = module.sql_database.sql_server_name
+}
+
+output "sql_server_fqdn" {
+  description = "Fully qualified domain name of the SQL server"
+  value       = module.sql_database.sql_server_fqdn
+}
+
+output "sql_administrator_login" {
+  description = "SQL administrator login"
+  value       = module.sql_database.sql_administrator_login
+}
+
+output "sql_administrator_password" {
+  description = "SQL administrator password"
+  value       = module.sql_database.sql_administrator_password
+  sensitive   = true
+}
+
+output "sql_connection_string" {
+  description = "SQL connection string"
+  value       = module.sql_database.sql_connection_string
+  sensitive   = true
+}
+
+# Security Outputs
 output "key_vault_name" {
-  description = "Name of the Key Vault"
+  description = "Name of Key Vault"
   value       = module.security.key_vault_name
 }
 
 output "key_vault_id" {
-  description = "ID of the Key Vault"
+  description = "ID of Key Vault"
   value       = module.security.key_vault_id
 }
 
 output "key_vault_uri" {
-  description = "URI of the Key Vault"
+  description = "URI of Key Vault"
   value       = module.security.key_vault_uri
 }
 
+# Application Outputs
 output "app_service_plan_name" {
   description = "Name of the App Service Plan"
   value       = module.applications.app_service_plan_name
@@ -115,23 +192,24 @@ output "vm_public_ips" {
   value       = module.compute.vm_public_ips
 }
 
+# Monitoring Outputs
 output "log_analytics_workspace_id" {
-  description = "ID of the Log Analytics workspace"
+  description = "ID of Log Analytics workspace"
   value       = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_id : null
 }
 
 output "log_analytics_workspace_name" {
-  description = "Name of the Log Analytics workspace"
+  description = "Name of Log Analytics workspace"
   value       = var.enable_monitoring ? module.monitoring[0].log_analytics_workspace_name : null
 }
 
 output "application_insights_name" {
-  description = "Name of the Application Insights"
+  description = "Name of Application Insights"
   value       = var.enable_monitoring ? module.monitoring[0].application_insights_name : null
 }
 
 output "application_insights_app_id" {
-  description = "App ID of the Application Insights"
+  description = "App ID of Application Insights"
   value       = var.enable_monitoring ? module.monitoring[0].application_insights_app_id : null
 }
 
@@ -158,49 +236,6 @@ output "container_registry_admin_username" {
 output "container_registry_admin_password" {
   description = "Admin password of the Azure Container Registry"
   value       = module.compute.container_registry_admin_password
-  sensitive   = true
-}
-
-output "sql_server_name" {
-  description = "Name of the SQL server"
-  value       = module.storage.sql_server_name
-}
-
-output "sql_server_fqdn" {
-  description = "Fully qualified domain name of the SQL server"
-  value       = module.storage.sql_server_fqdn
-}
-
-output "sql_database_name" {
-  description = "Name of the SQL database"
-  value       = module.storage.sql_database_name
-}
-
-output "sql_administrator_login" {
-  description = "SQL administrator login"
-  value       = module.storage.sql_administrator_login
-}
-
-output "sql_administrator_password" {
-  description = "SQL administrator password"
-  value       = module.storage.sql_administrator_password
-  sensitive   = true
-}
-
-output "sql_connection_string" {
-  description = "SQL connection string"
-  value       = module.storage.sql_connection_string
-  sensitive   = true
-}
-
-output "redis_cache_name" {
-  description = "Name of the Redis Cache"
-  value       = module.storage.redis_cache_name
-}
-
-output "redis_cache_connection_string" {
-  description = "Connection string of the Redis Cache"
-  value       = module.storage.redis_cache_connection_string
   sensitive   = true
 }
 
